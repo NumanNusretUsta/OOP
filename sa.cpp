@@ -1,37 +1,37 @@
 #include <iostream>
 #include "stdlib.h"
 using namespace std;
-
+template<class T = int, class M = int>
 class SafeArray {
   private:
-    int N;
-    int *arr;
+    M N;
+    T *arr;
 
-    void put(int i, int val) {
+    void put(M i, T val) {
       arr[i] = val;
     }
 
   public:
     SafeArray() {
-      N = 0;
+      N = (M)0;
       arr = NULL;
     }
 
-    SafeArray(int SIZE, int FILL = 0) {
+    SafeArray(M SIZE, int FILL = 0) {
       if (SIZE != 0) {
         N = SIZE;
-        arr = new int[SIZE];
+        arr = new T[SIZE];
         if (FILL == 0) {
-          for (int i = 0; i < SIZE; i++) arr[i] = 0; 
+          for (M i = 0; i < SIZE; i++) arr[i] = (T)0; 
         } else {
           unsigned int t = static_cast<unsigned int>(time(NULL));
           srand(t);
-          for (int i = 0; i < SIZE; i++) arr[i] = rand()%FILL;
+          for (M i = 0; i < SIZE; i++) arr[i] = rand()%FILL;
         }
       }   
     }
 
-    int at(int i) {
+    T at(M i) {
       if (i < N && i >= 0) {
         return arr[i];
       } else {
@@ -42,7 +42,7 @@ class SafeArray {
 
     SafeArray operator + (SafeArray &other) {
       SafeArray tmp(N);
-      for (int i = 0; i < N; i++) {
+      for (M i = 0; i < N; i++) {
         //tmp.put(i, arr[i]+other.arr[i]);
         tmp.arr[i] = arr[i]+other.arr[i];
       }
@@ -52,14 +52,14 @@ class SafeArray {
 
 int main(){
   // test default constructor
-  SafeArray sa0;
+  SafeArray<> sa0;
 
   // test overloaded constructor
-  SafeArray sa1(10, 100);
-  SafeArray sa2(10, 5);
+  SafeArray<double,int> sa1(10, 100);
+  SafeArray<double,int> sa2(10, 5);
 
   // perform arithmetic operation
-  SafeArray sa3 = sa1+sa2;
+  SafeArray<double,int> sa3 = sa1+sa2;
   //sa3[5] = 4;
 
   // print content
